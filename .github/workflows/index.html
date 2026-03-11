@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ══ SEO: Primary ══ -->
+  <title>Freelance Finance Tracker – Excel & Google Sheets voor ZZP'ers | BTW bijhouden 2025</title>
+  <meta name="description" content="Houd je BTW, omzet en belasting bij als ZZP'er of freelancer. Nederlandse Excel- en Google Sheets-template met automatische BTW-berekening, kwartaaloverzicht en belastingschatting 2025. Eenmalig €14.">
+  <meta name="keywords" content="BTW bijhouden ZZP, freelance administratie Excel, ZZP boekhouding spreadsheet, Excel template ZZP 2025, BTW aangifte Excel, freelance finance tracker, administratie bijhouden ZZP, Google Sheets ZZP boekhouding">
+  <link rel="canonical" href="https://dekker5.github.io/freelance-finance-tracker/">
+
+  <!-- ══ SEO: Open Graph ══ -->
+  <meta property="og:title" content="Freelance Finance Tracker – BTW & Belasting voor ZZP'ers">
+  <meta property="og:description" content="Nederlandse Excel-template voor ZZP'ers. BTW automatisch berekend, kwartaaloverzicht klaar voor aangifte, belastingschatting 2025. Eenmalig €14.">
+  <meta property="og:type" content="product">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:url" content="https://dekker5.github.io/freelance-finance-tracker/">
+
+  <!-- ══ SEO: Schema Markup – Product ══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Freelance Finance Tracker NL",
+    "description": "Excel en Google Sheets template voor Nederlandse ZZP'ers en freelancers. Automatische BTW-berekening, kwartaaloverzicht voor BTW-aangifte, belastingschatting 2025, omzet- en kostenoverzicht.",
+    "offers": {
+      "@type": "Offer",
+      "price": "14.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://dekker5.gumroad.com/l/FreelancePlanner"
+    },
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "ZZP'ers, freelancers, eenmanszaak ondernemers"
+    }
+  }
+  </script>
+
+  <!-- ══ SEO: Schema Markup – FAQ ══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Werkt deze template in Google Sheets?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja. De Freelance Finance Tracker werkt in zowel Microsoft Excel als Google Sheets. Google Sheets is gratis en je hebt er alleen een Google-account voor nodig."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hoe berekent de template mijn BTW?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Je vult het factuurbedrag in en het BTW-percentage (standaard 21%, aanpasbaar naar 9% of 0%). De BTW wordt automatisch berekend. Het kwartaaloverzicht toont precies hoeveel je per kwartaal moet afdragen."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is dit geschikt als ik net begin als ZZP'er?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja, juist. De template is speciaal ontworpen voor ZZP'ers en freelancers zonder boekhoudkennis. Je hoeft alleen je datum en bedrag in te vullen — de rest berekent de sheet zelf."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Welke belastingbedragen worden gebruikt?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "De template gebruikt de 2025-tarieven: zelfstandigenaftrek €2.470, MKB-winstvrijstelling 13,69%, en inkomstenbelasting schijf 1 van 36,97%. Alle bedragen zijn aanpasbaar in het tabblad Instellingen."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --ink:     #16140f;
+      --paper:   #faf8f3;
+      --accent:  #c94030;
+      --sage:    #4a7c59;
+      --sand:    #b89a6a;
+      --rule:    #d8d2c4;
+      --muted:   #7a7060;
+      --light:   #eeece6;
+      --soft-green: #eaf4ec;
+      --soft-red:   #faeaea;
+      --soft-blue:  #eaf0fa;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    .container--wide { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* ── Accent stripe ── */
+    .top-stripe { height: 6px; background: var(--accent); width: 100%; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--rule);
+      padding: 18px 0;
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 9px 22px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 72px 0 60px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-label {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      margin-bottom: 28px;
+      font-family: 'Source Serif 4', serif;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 36px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px 36px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+    .price-note { font-size: 14px; color: var(--muted); font-style: italic; }
+
+    /* ── Rule ── */
+    .rule { height: 1px; background: var(--rule); margin: 0; }
+
+    /* ── Section ── */
+    section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .section-intro { color: var(--muted); font-size: 16px; margin-bottom: 40px; font-weight: 300; }
+
+    /* ── Problem section ── */
+    .problem-list { list-style: none; margin: 32px 0; }
+    .problem-list li {
+      padding: 16px 0 16px 28px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 16px;
+      color: var(--ink);
+    }
+    .problem-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .problem-list li:first-child { border-top: 1px solid var(--rule); }
+
+    /* ── Features grid ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 40px;
+    }
+    .feature-card {
+      background: var(--paper);
+      padding: 32px 28px;
+    }
+    .feature-icon {
+      width: 36px;
+      height: 4px;
+      margin-bottom: 20px;
+    }
+    .feature-icon--green { background: var(--sage); }
+    .feature-icon--red   { background: var(--accent); }
+    .feature-icon--sand  { background: var(--sand); }
+    .feature-icon--ink   { background: var(--ink); }
+    .feature-card p { font-size: 15px; color: var(--muted); font-weight: 300; margin-top: 6px; line-height: 1.6; }
+
+    /* ── What you get ── */
+    .tabs-list { list-style: none; margin-top: 36px; }
+    .tab-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .tab-item:first-child { border-top: 1px solid var(--rule); }
+    .tab-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--rule);
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .tab-content p { font-size: 15px; color: var(--muted); font-weight: 300; margin-top: 4px; }
+
+    /* ── For whom ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .audience-card {
+      border: 1px solid var(--rule);
+      padding: 24px 20px;
+      font-size: 15px;
+    }
+    .audience-card strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .audience-card p { color: var(--muted); font-weight: 300; font-size: 14px; }
+
+    /* ── Specs ── */
+    .specs-table { width: 100%; border-collapse: collapse; margin-top: 36px; }
+    .specs-table tr { border-bottom: 1px solid var(--rule); }
+    .specs-table tr:first-child { border-top: 1px solid var(--rule); }
+    .specs-table td { padding: 14px 0; font-size: 15px; vertical-align: top; }
+    .specs-table td:first-child { color: var(--muted); width: 42%; font-weight: 300; }
+    .specs-table td:last-child { font-weight: 400; }
+
+    /* ── FAQ ── */
+    .faq-list { list-style: none; margin-top: 36px; }
+    .faq-item { border-bottom: 1px solid var(--rule); }
+    .faq-item:first-child { border-top: 1px solid var(--rule); }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: 'Source Serif 4', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-q::after { content: '+'; font-size: 22px; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
+
+    /* ── SEO content block ── */
+    .seo-content { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+    .seo-content h2 { margin-bottom: 20px; }
+    .seo-content p { color: var(--muted); font-size: 16px; font-weight: 300; margin-bottom: 16px; max-width: 680px; }
+    .seo-content p strong { color: var(--ink); font-weight: 600; }
+
+    /* ── CTA block ── */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+    .cta-section h2 { margin-bottom: 16px; }
+    .cta-section p { color: var(--muted); font-weight: 300; font-size: 17px; margin-bottom: 36px; }
+    .price-display {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: -2px;
+    }
+    .price-label { font-size: 16px; color: var(--muted); font-weight: 300; }
+    .cta-sub { font-size: 14px; color: var(--muted); margin-top: 16px; font-style: italic; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 28px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-label, h1, .hero-sub, .hero-actions {
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero-label  { animation-delay: 0.05s; }
+    h1           { animation-delay: 0.12s; }
+    .hero-sub    { animation-delay: 0.2s; }
+    .hero-actions{ animation-delay: 0.28s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero { padding: 48px 0 40px; }
+      .btn-primary { width: 100%; text-align: center; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="top-stripe"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Freelance Finance Tracker</a>
+    <a href="https://dekker5.gumroad.com/l/FreelancePlanner" class="nav-cta" rel="noopener">Download — €14</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-label">Excel &amp; Google Sheets · Nederland 2025</span>
+    <h1>Stop met gokken<br>hoeveel BTW je<br><em>schuldig bent.</em></h1>
+    <p class="hero-sub">Een Nederlandse spreadsheet voor ZZP'ers en freelancers. BTW automatisch berekend, kwartaaloverzicht klaar voor aangifte, belastingschatting op basis van de 2025-tarieven.</p>
+    <div class="hero-actions">
+      <a href="https://dekker5.gumroad.com/l/FreelancePlanner" class="btn-primary" rel="noopener">Direct downloaden — €14</a>
+      <span class="price-note">Eenmalig · geen abonnement · direct beschikbaar</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROBLEEM ══ -->
+<section>
+  <div class="container">
+    <h2>Herkenbaar?</h2>
+    <p class="section-intro">Wat ZZP'ers elk kwartaal meemaken.</p>
+    <ul class="problem-list" role="list">
+      <li>Facturen terugzoeken, optellen, hopen dat het klopt — elk kwartaal opnieuw</li>
+      <li>Niet precies weten hoeveel je de Belastingdienst schuldig bent totdat de aangifte er al aan komt</li>
+      <li>Een Excel-bestand dat je zelf in elkaar hebt geflanst, maar eigenlijk niet vertrouwt</li>
+      <li>Geen idee wat je netto winst dit jaar is, of je je omzetdoel haalt</li>
+      <li>Kosten vergeten als aftrekpost omdat je ze nergens systematisch bijhoudt</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section>
+  <div class="container--wide">
+    <div class="container" style="padding:0">
+      <h2>Wat de tracker doet</h2>
+      <p class="section-intro">Invullen, de rest gaat vanzelf.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--green"></div>
+        <h3>BTW automatisch berekend</h3>
+        <p>Vul je factuurbedrag in. De BTW (21% of 9%) wordt direct berekend. Per factuur aanpasbaar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--red"></div>
+        <h3>Kwartaaloverzicht BTW</h3>
+        <p>Q1 t/m Q4 klaar om over te nemen in je aangifte bij de Belastingdienst. Geen extra werk.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--sand"></div>
+        <h3>Belastingschatting 2025</h3>
+        <p>Automatische berekening op basis van zelfstandigenaftrek, MKB-winstvrijstelling en het 2025-tarief.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--ink"></div>
+        <h3>Dashboard met jaarcijfers</h3>
+        <p>Omzet, kosten, netto winst en voortgang op je omzetdoel — in één oogopslag zichtbaar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--green"></div>
+        <h3>Aftrekbare kosten bijhouden</h3>
+        <p>Per uitgave aangeef je of die volledig, deels of niet aftrekbaar is. De aftrekbare BTW wordt automatisch verrekend.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon--red"></div>
+        <h3>Automatisch factuurnummer</h3>
+        <p>Elk jaar automatisch genummerd: 2025-001, 2025-002, enzovoort. Altijd overzicht, geen dubbele nummers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WAT JE KRIJGT ══ -->
+<section>
+  <div class="container">
+    <h2>Vijf tabbladen, alles geregeld</h2>
+    <p class="section-intro">De template bestaat uit vijf overzichtelijke werkbladen.</p>
+    <ul class="tabs-list" role="list">
+      <li class="tab-item">
+        <span class="tab-num">01</span>
+        <div class="tab-content">
+          <h3>Dashboard</h3>
+          <p>Totale omzet, kosten, netto winst, BTW-saldo en belastingschatting — automatisch bijgewerkt zodra je inkomsten of uitgaven invult. Inclusief maandoverzicht en voortgang op je omzetdoel.</p>
+        </div>
+      </li>
+      <li class="tab-item">
+        <span class="tab-num">02</span>
+        <div class="tab-content">
+          <h3>Inkomsten</h3>
+          <p>Datum en bedrag invullen. Factuurnummer, maandnummer en BTW worden automatisch ingevuld. Ruimte voor 50 facturen per jaar — meer dan genoeg voor de meeste ZZP'ers.</p>
+        </div>
+      </li>
+      <li class="tab-item">
+        <span class="tab-num">03</span>
+        <div class="tab-content">
+          <h3>Uitgaven</h3>
+          <p>Kosten bijhouden per categorie (software, hardware, reiskosten, marketing, opleiding, verzekering). Geef aan of een uitgave aftrekbaar is — de aftrekbare BTW wordt automatisch berekend.</p>
+        </div>
+      </li>
+      <li class="tab-item">
+        <span class="tab-num">04</span>
+        <div class="tab-content">
+          <h3>BTW-overzicht</h3>
+          <p>BTW per kwartaal (Q1–Q4), klaar om over te nemen in je aangifte. BTW op aftrekbare kosten wordt automatisch verrekend met de te betalen BTW.</p>
+        </div>
+      </li>
+      <li class="tab-item">
+        <span class="tab-num">05</span>
+        <div class="tab-content">
+          <h3>Instellingen</h3>
+          <p>Eenmalig invullen: jouw naam, BTW-tarief, KvK-nummer en BTW-nummer. Belastingcijfers voor 2025 zijn al ingevuld maar volledig aanpasbaar.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ VOOR WIE ══ -->
+<section>
+  <div class="container">
+    <h2>Voor wie is dit?</h2>
+    <p class="section-intro">Speciaal gebouwd voor de Nederlandse markt.</p>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <strong>Startende ZZP'ers</strong>
+        <p>Net begonnen en geen idee hoe BTW-aangifte werkt? Dit legt het je niet uit — het doet het gewoon voor je.</p>
+      </div>
+      <div class="audience-card">
+        <strong>Freelancers</strong>
+        <p>Grafisch ontwerpers, developers, schrijvers, consultants — iedereen die factureert en BTW-aangifte moet doen.</p>
+      </div>
+      <div class="audience-card">
+        <strong>ZZP'ers zonder boekhouder</strong>
+        <p>Je doet je eigen administratie maar wil zekerheid dat de BTW-berekening klopt.</p>
+      </div>
+      <div class="audience-card">
+        <strong>Eenmanszaken</strong>
+        <p>Weinig transacties per maand? Dan is dure software overbodig. Dit is precies genoeg.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SPECS ══ -->
+<section>
+  <div class="container">
+    <h2>Technische details</h2>
+    <table class="specs-table">
+      <tbody>
+        <tr><td>Bestandsformaat</td><td>Excel (.xlsx) — ook te openen in Google Sheets</td></tr>
+        <tr><td>Taal</td><td>Volledig Nederlands</td></tr>
+        <tr><td>Belastingjaar</td><td>2025 (tarieven aanpasbaar)</td></tr>
+        <tr><td>BTW-tarieven</td><td>21%, 9% en 0% — per factuur instelbaar</td></tr>
+        <tr><td>Zelfstandigenaftrek</td><td>€ 2.470 (2025)</td></tr>
+        <tr><td>MKB-winstvrijstelling</td><td>13,69%</td></tr>
+        <tr><td>Inkomstenbelasting</td><td>36,97% (schijf 1, 2025)</td></tr>
+        <tr><td>Internetverbinding nodig</td><td>Nee — werkt offline</td></tr>
+        <tr><td>Abonnement</td><td>Nee — eenmalige aankoop</td></tr>
+        <tr><td>Leveringswijze</td><td>Direct downloadbaar na betaling</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ SEO CONTENT ══ -->
+<section class="seo-content">
+  <div class="container">
+    <h2>Boekhouden in Excel als ZZP'er: wat je nodig hebt</h2>
+    <p>Als ZZP'er of freelancer ben je verplicht een administratie bij te houden. Dat hoeft niet ingewikkeld te zijn. <strong>Voor een eenmanszaak met een beperkt aantal facturen per maand is een goed ingerichte Excel- of Google Sheets-template meer dan voldoende</strong> om je BTW-aangifte correct te doen en je financiën te overzien.</p>
+    <p>De meeste ZZP'ers hebben behoefte aan drie dingen: een overzicht van inkomsten per factuur, een lijst van zakelijke uitgaven (liefst per categorie), en een BTW-overzicht per kwartaal. Dure boekhoudpakketten zijn voor een startende eenmanszaak zelden nodig.</p>
+    <p><strong>Wat maakt een goede ZZP-spreadsheet?</strong> Ten eerste automatische BTW-berekening — je wil zelf niets hoeven uitrekenen. Ten tweede een kwartaaloverzicht dat je direct kunt gebruiken voor je aangifte bij de Belastingdienst. Ten derde een overzicht van aftrekbare kosten, zodat je geen belastingvoordeel laat liggen.</p>
+    <p>De Freelance Finance Tracker NL combineert dit in één bestand, gebouwd op basis van de <strong>2025-belastingtarieven</strong> voor Nederlandse ZZP'ers. Inclusief zelfstandigenaftrek en MKB-winstvrijstelling.</p>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section>
+  <div class="container">
+    <h2>Veelgestelde vragen</h2>
+    <ul class="faq-list" role="list">
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Werkt dit ook in Google Sheets?</button>
+        <div class="faq-a">Ja. Je kunt het bestand uploaden naar Google Drive en openen in Google Sheets. Alle formules werken ook daar. Google Sheets is gratis en vereist alleen een Google-account.</div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Hoe wordt de BTW berekend?</button>
+        <div class="faq-a">Je vult het factuurbedrag exclusief BTW in. Het BTW-percentage staat standaard op 21%, maar je past dit per regel aan naar 9% (laag tarief) of 0% (vrijgesteld). Het BTW-bedrag en het kwartaaltotaal worden automatisch berekend.</div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is dit geschikt als ik net begin als ZZP'er?</button>
+        <div class="faq-a">Ja, juist. De template is ontworpen voor ZZP'ers zonder boekhoudkennis. Je hoeft alleen datum en bedrag in te vullen. Factuurnummer, maand, BTW en alle overzichten worden automatisch ingevuld.</div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Welke belastingbedragen worden gebruikt?</button>
+        <div class="faq-a">De 2025-tarieven: zelfstandigenaftrek € 2.470, MKB-winstvrijstelling 13,69%, en inkomstenbelasting schijf 1 van 36,97%. Je past alle bedragen eenvoudig aan in het tabblad Instellingen.</div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Hoe ontvang ik het bestand?</button>
+        <div class="faq-a">Na betaling via Gumroad ontvang je direct een downloadlink per e-mail. Je kunt het bestand meteen openen in Excel of uploaden naar Google Drive.</div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" aria-expanded="false">Wat als ik meer dan 50 facturen per jaar heb?</button>
+        <div class="faq-a">De template bevat standaard 50 invoerrijen voor inkomsten. Je kunt eenvoudig extra rijen toevoegen — de formules passen zich automatisch aan als je de bestaande rijen als voorbeeld gebruikt.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Klaar om orde te scheppen<br>in je administratie?</h2>
+    <p>Eenmalig downloaden. De rest van het jaar rust.</p>
+    <div class="price-display">
+      <span class="price-amount">€14</span>
+      <span class="price-label">eenmalig</span>
+    </div>
+    <br>
+    <a href="https://dekker5.gumroad.com/l/FreelancePlanner" class="btn-primary" rel="noopener">Download via Gumroad</a>
+    <p class="cta-sub">Geen abonnement &nbsp;·&nbsp; Geen accountant nodig &nbsp;·&nbsp; Direct beschikbaar</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Freelance Finance Tracker NL &nbsp;·&nbsp; Gebouwd voor Nederlandse ZZP'ers en freelancers &nbsp;·&nbsp; 2025</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
